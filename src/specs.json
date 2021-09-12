@@ -1,0 +1,8 @@
+{
+    "id": "lqx.node" ,
+    "version" : "0.0.1",
+    "dependencies": [
+        { "id":"btc.base" },
+        { "id": "lqx.binaries"}
+    ]
+}

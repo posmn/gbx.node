@@ -1,0 +1,10 @@
+{
+    "Description": '''
+LQX masternode'''
+    Links: [
+        { 
+            website: "https://lqxcoin.com/",
+            explorer: "https://explorer.lqxcoin.com/"
+        }
+    ]
+}
