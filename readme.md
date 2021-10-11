@@ -1,6 +1,6 @@
-### lqx.node
+### gbx.node
 
-CRW node AMI app - runs system, master or gateway node.
+GBX node AMI app - runs system, master or gateway node.
 
 **All commands should be executed as root or with `sudo`.**
 
@@ -12,9 +12,9 @@ CRW node AMI app - runs system, master or gateway node.
 3. Create `app.json` or `app.hjson` with app configuration you like, e.g.:
 ```json
 {
-    "id": "lqx1",
+    "id": "gbx1",
     "type": {
-        "id": "lqx.node"
+        "id": "gbx.node"
     },
     "configuration": {
         "NODE_PRIVKEY" : "xxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -22,13 +22,13 @@ CRW node AMI app - runs system, master or gateway node.
             "externalip" : "127.0.0.1"
         }
     },
-    "user": "lqx",
+    "user": "gbx",
 }
 ```
 *Node types are: `masternode`, `systemnode`.*
 
 1. Run `ami --path=<your app path> setup`
-   * e.g. `ami --path=/mns/lqx1`
+   * e.g. `ami --path=/mns/gbx1`
 . Run `ami --path=<your app path> --help` to investigate available commands
 5. Start your node with `ami --path=<your app path> start`
 6. Check info about the node `ami --path=<your app path> info`
@@ -56,4 +56,4 @@ CRW node AMI app - runs system, master or gateway node.
 #### Troubleshooting 
 
 Run ami with `-ll=trace` to enable trace level printout, e.g.:
-`ami --path=/mns/lqx1 -ll=trace setup`
+`ami --path=/mns/gbx1 -ll=trace setup`
