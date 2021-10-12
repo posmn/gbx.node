@@ -14,7 +14,7 @@ GBX node AMI app - runs system, master or gateway node.
 {
     "id": "gbx1",
     "type": {
-        "id": "gbx.node"
+        "id": "posmn.gbx.node"
     },
     "configuration": {
         "NODE_PRIVKEY" : "xxxxxxxxxxxxxxxxxxxxxxxxx",
