@@ -30,7 +30,7 @@ local function _exec_gobyte_cli(...)
     if type(_rpcBind) == 'string' then
         table.insert(_arg, 1, '-rpcconnect=' .. _rpcBind)
     end
-    local _proc = proc.spawn('bin/gobyte-cli', _arg, {stdio = {stdout = 'pipe', stderr = 'pipe'}, wait = true})
+    local _proc = proc.spawn('bin/bin/gobyte-cli', _arg, {stdio = {stdout = 'pipe', stderr = 'pipe'}, wait = true})
 
     local _exitcode = _proc.exitcode
     local _stdout = _proc.stdoutStream:read('a') or ''
