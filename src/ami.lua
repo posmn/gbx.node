@@ -1,10 +1,10 @@
 return {
-    title = "LQX Node",
+    title = "Gobyte Node",
     commands = {
         info = {
             description = "ami 'info' sub command",
             summary = "Prints runtime info and status of the app",
-            action = "__lqx/info.lua",
+            action = "__gbx/info.lua",
             contextFailExitCode = EXIT_APP_INFO_ERROR
         },
         setup = {
@@ -24,7 +24,7 @@ return {
                 end
 
                 if _noOptions or _options.app then
-                    am.execute_extension("__lqx/download-binaries.lua", { contextFailExitCode = EXIT_SETUP_ERROR })
+                    am.execute_extension("__gbx/download-binaries.lua", { contextFailExitCode = EXIT_SETUP_ERROR })
                 end
 
                 if _noOptions or not _options["no-validate"] then
@@ -36,24 +36,24 @@ return {
 
                     am.execute_extension("__btc/configure.lua", { contextFailExitCode = EXIT_APP_CONFIGURE_ERROR })
                 end
-                log_success("LQX node setup complete.")
+                log_success("Gobyte node setup complete.")
             end
         },
         bootstrap = {
             description = "ami 'bootstrap' sub command",
-            summary = "Bootstraps the LQX node",
-            action = "__lqx/bootstrap.lua",
+            summary = "Bootstraps the Gobyte node",
+            action = "__gbx/bootstrap.lua",
             contextFailExitCode = EXIT_APP_INTERNAL_ERROR
         },
         start = {
             description = "ami 'start' sub command",
-            summary = "Starts the LQX node",
+            summary = "Starts the Gobyte node",
             action = "__btc/start.lua",
             contextFailExitCode = EXIT_APP_START_ERROR
         },
         stop = {
             description = "ami 'stop' sub command",
-            summary = "Stops the LQX node",
+            summary = "Stops the Gobyte node",
             action = "__btc/stop.lua",
             contextFailExitCode = EXIT_APP_STOP_ERROR
         },
@@ -63,8 +63,8 @@ return {
             action = function(_options, command, args, cli)
                 -- //TODO: Validate platform
                 -- //TODO: add switches
-                ami_assert(proc.EPROC, "LQX node AMI requires extra api - eli.proc.extra", EXIT_MISSING_API)
-                ami_assert(fs.EFS, "LQX node AMI requires extra api - eli.fs.extra", EXIT_MISSING_API)
+                ami_assert(proc.EPROC, "Gobyte node AMI requires extra api - eli.proc.extra", EXIT_MISSING_API)
+                ami_assert(fs.EFS, "Gobyte node AMI requires extra api - eli.fs.extra", EXIT_MISSING_API)
 
                 ami_assert(type(am.app.get("id")) == "string", "id not specified!", EXIT_INVALID_CONFIGURATION)
                 ami_assert(
@@ -78,7 +78,7 @@ return {
                     "Invalid app type!",
                     EXIT_INVALID_CONFIGURATION
                 )
-                log_success("LQX node configuration validated.")
+                log_success("Gobyte node configuration validated.")
             end
         },
         about = {

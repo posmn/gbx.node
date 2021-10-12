@@ -1,8 +1,8 @@
 {
-    "id": "lqx.node" ,
+    "id": "posmn.gbx.node" ,
     "version" : "0.0.1",
     "dependencies": [
         { "id":"btc.base" },
-        { "id": "lqx.binaries"}
+        { "id": "posmn.gbx.binaries"}
     ]
 }

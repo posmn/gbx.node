@@ -6,11 +6,11 @@ am.app.set_model(
             masternodeprivkey = am.app.get_configuration("NODE_PRIVKEY"),
             masternode = am.app.get_configuration("NODE_PRIVKEY") and 1 or nil
         },
-        DAEMON_NAME = "lqxd",
-        CLI_NAME = "lqx-cli",
-        CONF_NAME = "lqx.conf",
+        DAEMON_NAME = "bin/gobyted",
+        CLI_NAME = "bin/gobyte-cli",
+        CONF_NAME = "gobyte.conf",
         CONF_SOURCE = "__btc/assets/daemon.conf",
-        SERVICE_NAME = "lqxd",
+        SERVICE_NAME = "gobyted",
     },
     { merge = true, overwrite = true }
 )

@@ -1,0 +1,10 @@
+{
+    "Description": '''
+Gobyte masternode'''
+    Links: [
+        { 
+            website: "https://gobyte.network/",
+            explorer: "https://explorer.gobyte.network/"
+        }
+    ]
+}

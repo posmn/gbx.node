@@ -13,24 +13,24 @@ ami_assert(
 )
 
 local _info = {
-    lqxd = _status,
+    gobyted = _status,
     started = _started,
     level = 'ok',
     synced = false,
-    status = 'LQX node down',
+    status = 'Gobyte node down',
     version = am.app.get_version(),
     type = am.app.get_type(),
     currentBlock = 'unknown',
     currentBlockHash = 'unknown'
 }
 
-local function _exec_lqx_cli(...)
+local function _exec_gobyte_cli(...)
     local _arg = {'-datadir=data', ...}
     local _rpcBind = am.app.get_configuration({'DAEMON_CONFIGURATION', 'rpcbind'})
     if type(_rpcBind) == 'string' then
         table.insert(_arg, 1, '-rpcconnect=' .. _rpcBind)
     end
-    local _proc = proc.spawn('bin/lqx-cli', _arg, {stdio = {stdout = 'pipe', stderr = 'pipe'}, wait = true})
+    local _proc = proc.spawn('bin/gobyte-cli', _arg, {stdio = {stdout = 'pipe', stderr = 'pipe'}, wait = true})
 
     local _exitcode = _proc.exitcode
     local _stdout = _proc.stdoutStream:read('a') or ''
@@ -38,7 +38,7 @@ local function _exec_lqx_cli(...)
     return _exitcode, _stdout, _stderr
 end
 
-local function _get_lqx_cli_result(exitcode, stdout, stderr)
+local function _get_gobyte_cli_result(exitcode, stdout, stderr)
     if exitcode ~= 0 then
         local _errorInfo = stderr:match('error: (.*)')
         local _ok, _output = hjson.safe_parse(_errorInfo)
@@ -57,10 +57,10 @@ local function _get_lqx_cli_result(exitcode, stdout, stderr)
     end
 end
 
-if _info.lqxd == 'running' then
+if _info.gobyted == 'running' then
     -- if am.app.get_configuration("NODE_PRIVKEY") then
-    --     local _exitcode, _stdout, _stderr = _exec_lqx_cli("-datadir=data", "masternode", "status")
-    --     local _success, _output = _get_lqx_cli_result(_exitcode, _stdout, _stderr)
+    --     local _exitcode, _stdout, _stderr = _exec_gobyte_cli("-datadir=data", "masternode", "status")
+    --     local _success, _output = _get_gobyte_cli_result(_exitcode, _stdout, _stderr)
 
     --     _info.status = _output.message
     --     if not _success or (_info.status ~= 'Masternode successfully started') then
@@ -68,16 +68,16 @@ if _info.lqxd == 'running' then
     --     end
     -- end
 
-    local _exitcode, _stdout, _stderr = _exec_lqx_cli('-datadir=data', 'getblockchaininfo')
-    local _success, _output = _get_lqx_cli_result(_exitcode, _stdout, _stderr)
+    local _exitcode, _stdout, _stderr = _exec_gobyte_cli('-datadir=data', 'getblockchaininfo')
+    local _success, _output = _get_gobyte_cli_result(_exitcode, _stdout, _stderr)
 
     if _success then
         _info.currentBlock = _output.blocks
         _info.currentBlockHash = _output.bestblockhash
     end
 
-    local _exitcode, _stdout, _stderr = _exec_lqx_cli('-datadir=data', 'mnsync', 'status')
-    local _success, _output = _get_lqx_cli_result(_exitcode, _stdout, _stderr)
+    local _exitcode, _stdout, _stderr = _exec_gobyte_cli('-datadir=data', 'mnsync', 'status')
+    local _success, _output = _get_gobyte_cli_result(_exitcode, _stdout, _stderr)
 
     if _success then
         _info.synced = _output.IsBlockchainSynced
