@@ -88,12 +88,7 @@ if _info.gobyted == 'running' then
             _info.status = 'Unknown sync status!'
             _info.level = 'error'
         else
-            if _info.synced then
-                _info.status = 'Synced.'
-            else
-                _info.status = 'Syncing'
-                _info.level = 'warn'
-            end
+            _info.status = 'Synced.'
         end
     end
 else
