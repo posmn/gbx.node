@@ -11,6 +11,10 @@ on:
       version:
         description: 'Version'
         required: true
+      version:
+        description: 'AIR definition location'
+        required: true
+        default: 'ami/definition/posmn/gbx/'
 
 
 jobs:
@@ -39,6 +43,7 @@ jobs:
 
       - name: upload artifact
         uses: actions/upload-release-asset@v1
+        id: upload_artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -46,3 +51,11 @@ jobs:
           asset_path: zipped.zip
           asset_name: ${{ github.event.repository.name }}-${{ github.event.inputs.version }}.zip
           asset_content_type: application/zip
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: jpaarhuis/air
+          event-type: new-release
+          client-payload: '{"url": "${{ steps.upload_artifact.outputs.browser_download_url }}"}'
