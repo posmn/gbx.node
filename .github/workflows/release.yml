@@ -15,10 +15,10 @@ on:
         description: 'Dispatch repository'
         required: true
         default: 'jpaarhuis/air'
-      dispatchevent:
-        description: 'Dispatch event'
+      definitionpath:
+        description: 'Air definition location'
         required: true
-        default: 'gbx'
+        default: 'posmn/gbx/node'
 
 
 jobs:
@@ -61,5 +61,5 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ${{ github.event.inputs.dispatchrepo }}
-          event-type: ${{ github.event.inputs.dispatchevent }}
-          client-payload: '{"url": "${{ steps.upload_artifact.outputs.browser_download_url }}", "version": "${{ github.event.inputs.version }}"}'
+          event-type: new-release
+          client-payload: '{"url": "${{ steps.upload_artifact.outputs.browser_download_url }}", "version": "${{ github.event.inputs.version }}", "definitionpath": "${{ github.event.inputs.definitionpath }}"}'
