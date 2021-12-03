@@ -11,10 +11,14 @@ on:
       version:
         description: 'Version'
         required: true
-      version:
-        description: 'AIR definition location'
+      dispatchrepo:
+        description: 'Dispatch repository'
         required: true
-        default: 'ami/definition/posmn/gbx/'
+        default: 'jpaarhuis/air'
+      dispatchevent:
+        description: 'Dispatch event'
+        required: true
+        default: 'gbx'
 
 
 jobs:
@@ -56,6 +60,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: jpaarhuis/air
-          event-type: new-release
-          client-payload: '{"url": "${{ steps.upload_artifact.outputs.browser_download_url }}"}'
+          repository: ${{ github.event.inputs.dispatchrepo }}
+          event-type: ${{ github.event.inputs.dispatchevent }}
+          client-payload: '{"url": "${{ steps.upload_artifact.outputs.browser_download_url }}", "version": "${{ github.event.inputs.version }}"}'
