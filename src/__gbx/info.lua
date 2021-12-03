@@ -95,10 +95,6 @@ else
     _info.level = 'error'
 end
 
-if not _info.synced and _info.level == 'ok' then
-    _info.level = 'warn'
-end
-
 if _json then
     print(hjson.stringify_to_json(_info, {indent = false}))
 else
