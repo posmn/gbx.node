@@ -8,9 +8,6 @@ on:
 
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version'
-        required: true
       dispatchrepo:
         description: 'Dispatch repository'
         required: true
@@ -28,6 +25,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: get version
+          id: version
+          uses: notiz-dev/github-action-json-property@release
+          with: 
+              path: 'src/specs.json'
+              prop_path: 'version'
+
+
       - name: zip src
         uses: papeloto/action-zip@v1
         with:
@@ -40,8 +45,8 @@ jobs:
         with:
           draft: false
           prerelease: false
-          release_name: ${{ github.event.inputs.version }}
-          tag_name: ${{ github.event.inputs.version }}
+          release_name: ${{ steps.version.outputs.prop }}
+          tag_name: ${{ steps.version.outputs.prop }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -53,7 +58,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: zipped.zip
-          asset_name: ${{ github.event.repository.name }}-${{ github.event.inputs.version }}.zip
+          asset_name: ${{ github.event.repository.name }}-${{ steps.version.outputs.prop }}.zip
           asset_content_type: application/zip
 
       - name: Repository Dispatch
@@ -62,4 +67,4 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: ${{ github.event.inputs.dispatchrepo }}
           event-type: new-release
-          client-payload: '{"url": "${{ steps.upload_artifact.outputs.browser_download_url }}", "version": "${{ github.event.inputs.version }}", "definitionpath": "${{ github.event.inputs.definitionpath }}"}'
+          client-payload: '{"url": "${{ steps.upload_artifact.outputs.browser_download_url }}", "version": "${{ steps.version.outputs.prop }}", "definitionpath": "${{ github.event.inputs.definitionpath }}"}'
