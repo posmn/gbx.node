@@ -1,6 +1,6 @@
 {
     "id": "posmn.gbx.node" ,
-    "version" : "0.0.7+0.16.2.1",
+    "version" : "0.0.8+0.16.2.1",
     "dependencies": [
         { "id":"btc.base" }
     ]
