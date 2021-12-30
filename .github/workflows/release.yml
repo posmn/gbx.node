@@ -1,21 +1,10 @@
-name: Update AIR with new release
+name: Release - Package app
 
+# Controls when the workflow will run
 on:
-  # push:
-  #   branches: [ main ]
-  # pull_request:
-  #   branches: [ main ]
 
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    inputs:
-      dispatchrepo:
-        description: 'Dispatch repository'
-        required: true
-        default: 'jpaarhuis/air'
-      definitionpath:
-        description: 'Air definition location'
-        required: true
-        default: 'posmn/gbx/node'
 
 
 jobs:
@@ -61,10 +50,19 @@ jobs:
           asset_name: ${{ github.event.repository.name }}-${{ steps.version.outputs.prop }}.zip
           asset_content_type: application/zip
 
-      - name: Repository Dispatch
+      - name: Generate SHA256 and PACKAGE_SOURCE
+        id: release_info
+        run: |
+          export SHA256=$(sha256sum zipped.zip | awk '{print $1}')
+          echo "::set-output name=SHA256::$SHA256"
+      - name: Air Repository Dispatch
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          repository: ${{ github.event.inputs.dispatchrepo }}
-          event-type: new-release
-          client-payload: '{"url": "${{ steps.upload_artifact.outputs.browser_download_url }}", "version": "${{ steps.version.outputs.prop }}", "definitionpath": "${{ github.event.inputs.definitionpath }}"}'
+          repository: jpaarhuis/air
+          event-type: app-release
+          client-payload: '{ "id": "${{ github.event.repository.name }}", "repository": "${{github.repository}}", "version": "${{ steps.version.outputs.prop }}", "package": "${{ steps.upload_artifact.outputs.browser_download_url }}", "sha256": "${{ steps.release_info.outputs.SHA256 }}"}'
+      
+        
+          
+          
